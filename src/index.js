@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
+import rootReducer from './common/reducer'
 import App from './app'
-import rootReducer from './reducers'
 
 const devTools = window.devToolsExtension && window.devToolsExtension()
 const store = createStore(rootReducer, devTools)

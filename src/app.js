@@ -2,17 +2,32 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as actions from './actions'
+import * as actions from './common/steps/actions'
+import { WELCOME_STEP, ENTER_PIN_STEP } from './common/steps'
+import Welcome from './components/welcome'
 
 class App extends Component {
+  onClick = () => {
+    const { changeStep } = this.props.actions
+
+    changeStep(ENTER_PIN_STEP)
+  }
+
   render () {
+    const { step } = this.props
+
     return (
-      <h1>app</h1>
+      <div>
+        <h1 onClick={this.onClick}>atm</h1>
+        { step === WELCOME_STEP && <Welcome /> }
+        { step === ENTER_PIN_STEP && <div>pin epta</div> }
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
+  step: state.steps.step
 })
 
 const mapDispatchToProps = (dispatch) => ({
