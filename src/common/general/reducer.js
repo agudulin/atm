@@ -1,4 +1,10 @@
-import { WELCOME_STEP, WITHDRAWAL_STEP, GOODBYE_STEP } from './steps'
+import {
+  WELCOME_STEP,
+  ENTER_PIN_STEP,
+  WITHDRAWAL_STEP,
+  WITHDRAWAL_OTHER_AMOUNT_STEP,
+  GOODBYE_STEP
+} from './steps'
 import {
   CHANGE_STEP,
   CHECK_PIN,
@@ -21,17 +27,30 @@ export default (state = initialState, action) => {
     ),
     [CHECK_PIN]: ({ pin }) => {
       if (pin !== '1234') {
-        return Object.assign({}, state, { error: 'Incorrect PIN' })
+        return Object.assign({}, state, {
+          error: 'Incorrect PIN',
+          step: ENTER_PIN_STEP
+        })
       }
 
-      return Object.assign({}, state, { error: null, step: WITHDRAWAL_STEP })
+      return Object.assign({}, state, {
+        error: null,
+        step: WITHDRAWAL_STEP
+      })
     },
     [CHECK_CASH_AMOUNT]: ({ cashAmount }) => {
       if (cashAmount <= 0 || cashAmount % 10 !== 0) {
-        return Object.assign({}, state, { error: 'Incorrect amount of money' })
+        return Object.assign({}, state, {
+          error: 'Incorrect amount of money',
+          step: WITHDRAWAL_OTHER_AMOUNT_STEP
+        })
       }
 
-      return Object.assign({}, state, { cashAmount, error: null, step: GOODBYE_STEP })
+      return Object.assign({}, state, {
+        cashAmount,
+        error: null,
+        step: GOODBYE_STEP
+      })
     },
     [UPDATE_CASH_WITHDRAWAL]: ({ cashAmount }) => (
       Object.assign({}, state, { cashAmount })

@@ -22,45 +22,28 @@ import Goodbye from 'components/screens/goodbye'
 import './index.css'
 
 class App extends Component {
-  //componentDidUpdate(prevProps) {
-    //if (this.props.step !== IN_PROGRESS_STEP && this.props.step !== prevProps.step) {
-    //}
-  //}
-
   onInsertCard = () => {
-    const { changeStep } = this.props.actions
-
-    changeStep(ENTER_PIN_STEP)
+    this.props.actions.changeStep(ENTER_PIN_STEP)
   }
 
   onUpdatePin = (e) => {
-    const { updatePin } = this.props.actions
-
-    updatePin(e.target.value)
+    this.props.actions.updatePin(e.target.value)
   }
 
   onUpdateCashWithdrawal = (e) => {
-    const { updateCashWithdrawal } = this.props.actions
-
-    updateCashWithdrawal(e.target.value)
+    this.props.actions.updateCashWithdrawal(e.target.value)
   }
 
   onEnterPin = () => {
-    const { changeStep, checkPin } = this.props.actions
-
-    checkPin(this.props.pin)
+    this.props.actions.checkPin(this.props.pin)
   }
 
   onSelectOtherAmount = () => {
-    const { changeStep } = this.props.actions
-
-    changeStep(WITHDRAWAL_OTHER_AMOUNT_STEP)
+    this.props.actions.changeStep(WITHDRAWAL_OTHER_AMOUNT_STEP)
   }
 
   onEnterCashAmount = (cashAmount) => {
-    const { checkCashAmount } = this.props.actions
-
-    checkCashAmount(cashAmount)
+    this.props.actions.checkCashAmount(cashAmount)
   }
 
   render () {
@@ -91,7 +74,7 @@ class App extends Component {
         />
       ),
       [IN_PROGRESS_STEP]: () => (
-        <div>wait a minute...</div>
+        <div>Please wait...</div>
       ),
       [GOODBYE_STEP]: () => (
         <Goodbye />
@@ -103,7 +86,7 @@ class App extends Component {
         <Header />
         <div>
           { renderScreen && renderScreen() }
-          { error && <ErrorPane message={error} /> }
+          { step !== IN_PROGRESS_STEP && error && <ErrorPane message={error} /> }
         </div>
       </div>
     )
