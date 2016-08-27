@@ -1,6 +1,7 @@
 import { IN_PROGRESS_STEP } from './steps'
 
 export const CHANGE_STEP = 'CHANGE_STEP'
+export const CHANGE_STEP_BACK = 'CHANGE_STEP_BACK'
 export const CHECK_PIN = 'CHECK_PIN'
 export const UPDATE_PIN = 'UPDATE_PIN'
 export const UPDATE_CASH_WITHDRAWAL = 'UPDATE_CASH_WITHDRAWAL'
@@ -27,6 +28,13 @@ export const changeStep = (step) => (dispatch) => {
   fakeHardwareDelay(() => dispatch({
     type: CHANGE_STEP,
     payload: { step }
+  }))
+}
+
+export const changeStepBack = () => (dispatch) => {
+  fakeHardwareDelay(() => dispatch({
+    type: CHANGE_STEP_BACK,
+    payload: {}
   }))
 }
 

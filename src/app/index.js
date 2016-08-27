@@ -12,6 +12,7 @@ import {
   GOODBYE_STEP
 } from 'common/general/steps'
 import ErrorPane from 'components/error-pane'
+import Footer from 'components/footer'
 import Header from 'components/header'
 import Welcome from 'components/screens/welcome'
 import EnterPin from 'components/screens/enter-pin'
@@ -44,6 +45,14 @@ class App extends Component {
 
   onEnterCashAmount = (cashAmount) => {
     this.props.actions.checkCashAmount(cashAmount)
+  }
+
+  onBack = () => {
+    this.props.actions.changeStepBack()
+  }
+
+  onExit = () => {
+    this.props.actions.changeStep(WELCOME_STEP)
   }
 
   render () {
@@ -88,6 +97,11 @@ class App extends Component {
           { renderScreen && renderScreen() }
           { step !== IN_PROGRESS_STEP && error && <ErrorPane message={error} /> }
         </div>
+        <Footer
+          displayBackButton={step !== WELCOME_STEP && step !== IN_PROGRESS_STEP && step !== GOODBYE_STEP}
+          onBack={this.onBack}
+          onExit={this.onExit}
+        />
       </div>
     )
   }

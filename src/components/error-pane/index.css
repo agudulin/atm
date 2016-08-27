@@ -8,7 +8,7 @@
   border-radius: 3px;
 
   &__prefix {
-    color: red;
+    color: tomato;
     margin-right: .3rem;
   }
 }

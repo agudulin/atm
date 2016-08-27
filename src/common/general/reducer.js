@@ -3,10 +3,12 @@ import {
   ENTER_PIN_STEP,
   WITHDRAWAL_STEP,
   WITHDRAWAL_OTHER_AMOUNT_STEP,
-  GOODBYE_STEP
+  GOODBYE_STEP,
+  IN_PROGRESS_STEP
 } from './steps'
 import {
   CHANGE_STEP,
+  CHANGE_STEP_BACK,
   CHECK_PIN,
   CHECK_CASH_AMOUNT,
   UPDATE_CASH_WITHDRAWAL,
@@ -17,14 +19,25 @@ const initialState = {
   cashAmount: 0,
   error: null,
   pin: '',
-  step: WELCOME_STEP
+  step: WELCOME_STEP,
+  stepsBack: []
 }
 
 export default (state = initialState, action) => {
   const updateState = {
-    [CHANGE_STEP]: ({ step }) => (
-      Object.assign({}, state, { step })
-    ),
+    [CHANGE_STEP]: ({ step }) => {
+      const stepsBack = (state.step === IN_PROGRESS_STEP || state.stepsBack[state.stepsBack.length - 1] === step)
+        ? state.stepsBack
+        : [...state.stepsBack, state.step]
+
+      return Object.assign({}, state, { step, stepsBack })
+    },
+    [CHANGE_STEP_BACK]: () => {
+      const step = state.stepsBack[state.stepsBack.length - 1]
+      const stepsBack = state.stepsBack.slice(0, -1)
+
+      return Object.assign({}, state, { step, stepsBack })
+    },
     [CHECK_PIN]: ({ pin }) => {
       if (pin !== '1234') {
         return Object.assign({}, state, {
