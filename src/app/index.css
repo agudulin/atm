@@ -12,7 +12,7 @@
 }
 
 #root {
-  background-color: black;
+  background: linear-gradient(to right bottom, #1ea0fa, #03235e);
   color: white;
   font-family: Lato, 'Lucida Grande';
   display: flex;

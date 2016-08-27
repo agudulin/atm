@@ -1,0 +1,11 @@
+.header {
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+
+  &__logo {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
