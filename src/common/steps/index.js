@@ -1,2 +1,4 @@
 export const WELCOME_STEP = Symbol('WELCOME_STEP')
 export const ENTER_PIN_STEP = Symbol('ENTER_PIN_STEP')
+export const WITHDRAWAL_STEP = Symbol('WITHDRAWAL_STEP')
+export const WITHDRAWAL_OTHER_AMOUNT_STEP = Symbol('WITHDRAWAL_OTHER_AMOUNT_STEP')
