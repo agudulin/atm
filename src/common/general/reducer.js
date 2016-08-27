@@ -26,7 +26,7 @@ const initialState = {
 export default (state = initialState, action) => {
   const updateState = {
     [CHANGE_STEP]: ({ step }) => {
-      const stepsBack = (state.step === IN_PROGRESS_STEP || state.stepsBack[state.stepsBack.length - 1] === step)
+      const stepsBack = (state.step === IN_PROGRESS_STEP || state.stepsBack[state.stepsBack.length - 1] === state.step)
         ? state.stepsBack
         : [...state.stepsBack, state.step]
 
@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
       const step = state.stepsBack[state.stepsBack.length - 1]
       const stepsBack = state.stepsBack.slice(0, -1)
 
-      return Object.assign({}, state, { step, stepsBack })
+      return Object.assign({}, state, { error: null, step, stepsBack })
     },
     [CHECK_PIN]: ({ pin }) => {
       if (pin !== '1234') {

@@ -99,6 +99,7 @@ class App extends Component {
         </div>
         <Footer
           displayBackButton={step !== WELCOME_STEP && step !== IN_PROGRESS_STEP && step !== GOODBYE_STEP}
+          displayExitButton={step !== WELCOME_STEP}
           onBack={this.onBack}
           onExit={this.onExit}
         />
