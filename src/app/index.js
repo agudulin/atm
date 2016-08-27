@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as stepsActions from 'common/steps/actions'
-import * as pinActions from 'common/pin/actions'
+import * as actions from 'common/general/actions'
 import {
   WELCOME_STEP,
   ENTER_PIN_STEP,
   WITHDRAWAL_STEP,
   WITHDRAWAL_OTHER_AMOUNT_STEP
-} from 'common/steps'
+} from 'common/general/steps'
 import ErrorPane from 'components/error-pane'
 import Header from 'components/header'
 import Welcome from 'components/screens/welcome'
@@ -21,25 +20,25 @@ import './index.css'
 
 class App extends Component {
   onInsertCard = () => {
-    const { changeStep } = this.props.stepsActions
+    const { changeStep } = this.props.actions
 
     changeStep(ENTER_PIN_STEP)
   }
 
-  onChangePin = (e) => {
-    const { changePin } = this.props.pinActions
+  onUpdatePin = (e) => {
+    const { updatePin } = this.props.actions
 
-    changePin(e.target.value)
+    updatePin(e.target.value)
   }
 
   onEnterPin = () => {
-    const { changeStep, checkPin } = this.props.stepsActions
+    const { changeStep, checkPin } = this.props.actions
 
     checkPin(this.props.pin)
   }
 
   onSelectOtherAmount = () => {
-    const { changeStep } = this.props.stepsActions
+    const { changeStep } = this.props.actions
 
     changeStep(WITHDRAWAL_OTHER_AMOUNT_STEP)
   }
@@ -53,7 +52,7 @@ class App extends Component {
         <main>
           { step === WELCOME_STEP && <Welcome onInsertCard={this.onInsertCard} /> }
           { step === ENTER_PIN_STEP && <EnterPin
-            onChangePin={this.onChangePin}
+            onUpdatePin={this.onUpdatePin}
             onEnterPin={this.onEnterPin}
             pin={pin}
           /> }
@@ -67,14 +66,13 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  step: state.steps.step,
-  error: state.steps.error,
-  pin: state.pin.pin
+  step: state.general.step,
+  error: state.general.error,
+  pin: state.general.pin
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  stepsActions: bindActionCreators(stepsActions, dispatch),
-  pinActions: bindActionCreators(pinActions, dispatch)
+  actions: bindActionCreators(actions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

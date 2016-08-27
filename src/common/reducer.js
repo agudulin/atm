@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux'
 
-import steps from './steps/reducer'
-import pin from './pin/reducer'
+import general from './general/reducer'
 
 const rootReducer = combineReducers({
-  pin,
-  steps
+  general
 })
 
 export default rootReducer
