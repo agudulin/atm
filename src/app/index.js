@@ -59,35 +59,40 @@ class App extends Component {
   render () {
     const { cashAmount, error, pin, step } = this.props
 
+    const renderScreen = {
+      [WELCOME_STEP]: () => (
+        <Welcome onInsertCard={this.onInsertCard} />
+      ),
+      [ENTER_PIN_STEP]: () => (
+        <EnterPin
+          onUpdatePin={this.onUpdatePin}
+          onEnterPin={this.onEnterPin}
+          pin={pin}
+        />
+      ),
+      [WITHDRAWAL_STEP]: () => (
+        <Withdrawal
+          onSelectOtherAmount={this.onSelectOtherAmount}
+          onEnterCashAmount={this.onEnterCashAmount}
+        />
+      ),
+      [WITHDRAWAL_OTHER_AMOUNT_STEP]: () => (
+        <WithdrawalOtherAmount
+          cashAmount={cashAmount}
+          onEnterCashAmount={this.onEnterCashAmount}
+          onUpdateCashWithdrawal={this.onUpdateCashWithdrawal}
+        />
+      ),
+      [IN_PROGRESS_STEP]: () => (
+        <div>wait a minute...</div>
+      )
+    }[step]
+
     return (
       <div>
         <Header />
         <main>
-          { step === WELCOME_STEP && <Welcome onInsertCard={this.onInsertCard} /> }
-          {
-            step === ENTER_PIN_STEP &&
-            <EnterPin
-              onUpdatePin={this.onUpdatePin}
-              onEnterPin={this.onEnterPin}
-              pin={pin}
-            />
-          }
-          {
-            step === WITHDRAWAL_STEP &&
-            <Withdrawal
-              onSelectOtherAmount={this.onSelectOtherAmount}
-              onEnterCashAmount={this.onEnterCashAmount}
-            />
-          }
-          {
-            step === WITHDRAWAL_OTHER_AMOUNT_STEP &&
-            <WithdrawalOtherAmount
-              cashAmount={cashAmount}
-              onEnterCashAmount={this.onEnterCashAmount}
-              onUpdateCashWithdrawal={this.onUpdateCashWithdrawal}
-            />
-          }
-          { step === IN_PROGRESS_STEP && <div>wait a minute...</div> }
+          { renderScreen && renderScreen() }
           { error && <ErrorPane message={error} /> }
         </main>
       </div>
