@@ -8,7 +8,8 @@ import {
   ENTER_PIN_STEP,
   WITHDRAWAL_STEP,
   WITHDRAWAL_OTHER_AMOUNT_STEP,
-  IN_PROGRESS_STEP
+  IN_PROGRESS_STEP,
+  GOODBYE_STEP
 } from 'common/general/steps'
 import ErrorPane from 'components/error-pane'
 import Header from 'components/header'
@@ -16,10 +17,16 @@ import Welcome from 'components/screens/welcome'
 import EnterPin from 'components/screens/enter-pin'
 import Withdrawal from 'components/screens/withdrawal'
 import WithdrawalOtherAmount from 'components/screens/withdrawal-other-amount'
+import Goodbye from 'components/screens/goodbye'
 
 import './index.css'
 
 class App extends Component {
+  //componentDidUpdate(prevProps) {
+    //if (this.props.step !== IN_PROGRESS_STEP && this.props.step !== prevProps.step) {
+    //}
+  //}
+
   onInsertCard = () => {
     const { changeStep } = this.props.actions
 
@@ -85,16 +92,19 @@ class App extends Component {
       ),
       [IN_PROGRESS_STEP]: () => (
         <div>wait a minute...</div>
+      ),
+      [GOODBYE_STEP]: () => (
+        <Goodbye />
       )
     }[step]
 
     return (
       <div>
         <Header />
-        <main>
+        <div>
           { renderScreen && renderScreen() }
           { error && <ErrorPane message={error} /> }
-        </main>
+        </div>
       </div>
     )
   }
