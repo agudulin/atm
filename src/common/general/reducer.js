@@ -1,21 +1,29 @@
-import { WELCOME_STEP, WITHDRAWAL_STEP } from './steps'
-import { CHANGE_STEP, CHECK_PIN, UPDATE_CASH_WITHDRAWAL, UPDATE_PIN } from './actions'
+import { WELCOME_STEP, WITHDRAWAL_STEP, IN_PROGRESS_STEP } from './steps'
+import { CHANGE_STEP, CHECK_PIN, CHECK_CASH_AMOUNT, UPDATE_CASH_WITHDRAWAL, UPDATE_PIN } from './actions'
 
 const initialState = {
   cashAmount: 0,
-  step: WELCOME_STEP,
-  error: null
+  error: null,
+  pin: '',
+  step: WELCOME_STEP
 }
 
 export default (state = initialState, action) => {
   const updateState = {
     [CHANGE_STEP]: ({ step }) => Object.assign({}, state, { step }),
     [CHECK_PIN]: ({ pin }) => {
-      if (pin === '1234') {
-        return Object.assign({}, state, { error: null, step: WITHDRAWAL_STEP })
-      } else {
+      if (pin !== '1234') {
         return Object.assign({}, state, { error: 'Incorrect PIN' })
       }
+
+      return Object.assign({}, state, { error: null, step: WITHDRAWAL_STEP })
+    },
+    [CHECK_CASH_AMOUNT]: ({ cashAmount }) => {
+      if (cashAmount <= 0 || cashAmount % 10 !== 0) {
+        return Object.assign({}, state, { error: 'Incorrect amount of money' })
+      }
+
+      return Object.assign({}, state, { cashAmount, error: null, step: IN_PROGRESS_STEP })
     },
     [UPDATE_CASH_WITHDRAWAL]: ({ cashAmount }) => Object.assign({}, state, { cashAmount }),
     [UPDATE_PIN]: ({ pin }) => Object.assign({}, state, { pin })
