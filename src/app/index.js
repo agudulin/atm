@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as actions from './common/steps/actions'
-import { WELCOME_STEP, ENTER_PIN_STEP } from './common/steps'
-import Welcome from './components/welcome'
+import * as actions from 'common/steps/actions'
+import { WELCOME_STEP, ENTER_PIN_STEP } from 'common/steps'
+import Welcome from 'components/welcome'
+
+import './index.css'
 
 class App extends Component {
   onClick = () => {

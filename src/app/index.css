@@ -1,0 +1,22 @@
+:root {
+  box-sizing: border-box;
+  height: 100%;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+:root, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  background-color: black;
+  color: white;
+  font-family: Lato, 'Lucida Grande';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
