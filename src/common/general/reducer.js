@@ -1,18 +1,12 @@
 import {
-  WELCOME_STEP,
-  ENTER_PIN_STEP,
-  WITHDRAWAL_STEP,
-  WITHDRAWAL_OTHER_AMOUNT_STEP,
-  GOODBYE_STEP,
-  IN_PROGRESS_STEP
+  WELCOME_STEP
 } from './steps'
 import {
   CHANGE_STEP,
   CHANGE_STEP_BACK,
-  CHECK_PIN,
-  CHECK_CASH_AMOUNT,
   UPDATE_CASH_WITHDRAWAL,
-  UPDATE_PIN
+  UPDATE_PIN,
+  SHOW_SPINNER
 } from './actions'
 
 const initialState = {
@@ -25,44 +19,27 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const updateState = {
-    [CHANGE_STEP]: ({ step }) => {
-      const stepsBack = (state.step === IN_PROGRESS_STEP || state.stepsBack[state.stepsBack.length - 1] === state.step)
+    [CHANGE_STEP]: ({ step, error }) => {
+      const stepsBack = (state.step === step)
         ? state.stepsBack
         : [...state.stepsBack, state.step]
 
-      return Object.assign({}, state, { step, stepsBack })
+      return Object.assign({}, state, {
+        error,
+        step,
+        stepsBack,
+        spinner: false
+      })
     },
     [CHANGE_STEP_BACK]: () => {
       const step = state.stepsBack[state.stepsBack.length - 1]
       const stepsBack = state.stepsBack.slice(0, -1)
 
-      return Object.assign({}, state, { error: null, step, stepsBack })
-    },
-    [CHECK_PIN]: ({ pin }) => {
-      if (pin !== '1234') {
-        return Object.assign({}, state, {
-          error: 'Incorrect PIN',
-          step: ENTER_PIN_STEP
-        })
-      }
-
       return Object.assign({}, state, {
         error: null,
-        step: WITHDRAWAL_STEP
-      })
-    },
-    [CHECK_CASH_AMOUNT]: ({ cashAmount }) => {
-      if (cashAmount <= 0 || cashAmount % 10 !== 0) {
-        return Object.assign({}, state, {
-          error: 'Incorrect amount of money',
-          step: WITHDRAWAL_OTHER_AMOUNT_STEP
-        })
-      }
-
-      return Object.assign({}, state, {
-        cashAmount,
-        error: null,
-        step: GOODBYE_STEP
+        step,
+        stepsBack,
+        spinner: false
       })
     },
     [UPDATE_CASH_WITHDRAWAL]: ({ cashAmount }) => (
@@ -70,6 +47,9 @@ export default (state = initialState, action) => {
     ),
     [UPDATE_PIN]: ({ pin }) => (
       Object.assign({}, state, { pin })
+    ),
+    [SHOW_SPINNER]: () => (
+      Object.assign({}, state, { spinner: true })
     )
   }[action.type]
 

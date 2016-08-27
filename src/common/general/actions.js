@@ -1,11 +1,15 @@
-import { IN_PROGRESS_STEP } from './steps'
+import {
+  ENTER_PIN_STEP,
+  GOODBYE_STEP,
+  WITHDRAWAL_STEP,
+  WITHDRAWAL_OTHER_AMOUNT_STEP
+} from './steps'
 
 export const CHANGE_STEP = 'CHANGE_STEP'
 export const CHANGE_STEP_BACK = 'CHANGE_STEP_BACK'
-export const CHECK_PIN = 'CHECK_PIN'
 export const UPDATE_PIN = 'UPDATE_PIN'
 export const UPDATE_CASH_WITHDRAWAL = 'UPDATE_CASH_WITHDRAWAL'
-export const CHECK_CASH_AMOUNT = 'CHECK_CASH_AMOUNT'
+export const SHOW_SPINNER = 'SHOW_SPINNER'
 
 const randomInt = (min, max) => {
   min = Math.ceil(min)
@@ -18,8 +22,8 @@ const fakeHardwareDelay = (fn, ms) => (
 )
 
 const showSpinner = () => ({
-  type: CHANGE_STEP,
-  payload: { step: IN_PROGRESS_STEP }
+  type: SHOW_SPINNER,
+  payload: {}
 })
 
 export const changeStep = (step) => (dispatch) => {
@@ -32,6 +36,8 @@ export const changeStep = (step) => (dispatch) => {
 }
 
 export const changeStepBack = () => (dispatch) => {
+  dispatch(showSpinner())
+
   fakeHardwareDelay(() => dispatch({
     type: CHANGE_STEP_BACK,
     payload: {}
@@ -41,10 +47,17 @@ export const changeStepBack = () => (dispatch) => {
 export const checkPin = (pin) => (dispatch) => {
   dispatch(showSpinner())
 
-  fakeHardwareDelay(() => dispatch({
-    type: CHECK_PIN,
-    payload: { pin }
-  }))
+  if (pin !== '1234') {
+    fakeHardwareDelay(() => dispatch({
+      type: CHANGE_STEP,
+      payload: { error: 'Incorrect PIN', step: ENTER_PIN_STEP }
+    }))
+  } else {
+    fakeHardwareDelay(() => dispatch({
+      type: CHANGE_STEP,
+      payload: { step: WITHDRAWAL_STEP }
+    }))
+  }
 }
 
 export const updatePin = (pin) => ({
@@ -60,8 +73,19 @@ export const updateCashWithdrawal = (cashAmount) => ({
 export const checkCashAmount = (cashAmount) => (dispatch) => {
   dispatch(showSpinner())
 
-  fakeHardwareDelay(() => dispatch({
-    type: CHECK_CASH_AMOUNT,
-    payload: { cashAmount }
-  }), 1500)
+  if (cashAmount <= 0 || cashAmount % 10 !== 0) {
+    fakeHardwareDelay(() => dispatch({
+      type: CHANGE_STEP,
+      payload: {
+        error: 'Incorrect amount of money',
+        step: WITHDRAWAL_OTHER_AMOUNT_STEP
+      }
+    }))
+  } else {
+    fakeHardwareDelay(() => dispatch({
+      cashAmount,
+      type: CHANGE_STEP,
+      payload: { step: GOODBYE_STEP }
+    }), 1500)
+  }
 }

@@ -8,7 +8,6 @@ import {
   ENTER_PIN_STEP,
   WITHDRAWAL_STEP,
   WITHDRAWAL_OTHER_AMOUNT_STEP,
-  IN_PROGRESS_STEP,
   GOODBYE_STEP
 } from 'common/general/steps'
 import ErrorPane from 'components/error-pane'
@@ -56,7 +55,7 @@ class App extends Component {
   }
 
   render () {
-    const { cashAmount, error, pin, step } = this.props
+    const { cashAmount, error, pin, step, spinner } = this.props
 
     const renderScreen = {
       [WELCOME_STEP]: () => (
@@ -82,9 +81,6 @@ class App extends Component {
           onUpdateCashWithdrawal={this.onUpdateCashWithdrawal}
         />
       ),
-      [IN_PROGRESS_STEP]: () => (
-        <div>Please wait...</div>
-      ),
       [GOODBYE_STEP]: () => (
         <Goodbye />
       )
@@ -94,12 +90,13 @@ class App extends Component {
       <div>
         <Header />
         <div>
-          { renderScreen && renderScreen() }
-          { step !== IN_PROGRESS_STEP && error && <ErrorPane message={error} /> }
+          { spinner && <div>Please wait...</div> }
+          { !spinner && renderScreen && renderScreen() }
+          { !spinner && error && <ErrorPane message={error} /> }
         </div>
         <Footer
-          displayBackButton={step !== WELCOME_STEP && step !== IN_PROGRESS_STEP && step !== GOODBYE_STEP}
-          displayExitButton={step !== WELCOME_STEP}
+          displayBackButton={!spinner && step !== WELCOME_STEP && step !== GOODBYE_STEP}
+          displayExitButton={!spinner && step !== WELCOME_STEP}
           onBack={this.onBack}
           onExit={this.onExit}
         />
@@ -111,6 +108,7 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   cashAmount: state.general.cashAmount,
   step: state.general.step,
+  spinner: state.general.spinner,
   error: state.general.error,
   pin: state.general.pin
 })
