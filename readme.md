@@ -6,6 +6,8 @@ A small web based prototype of an ATM.
 
 It is built on JavaScript using [React](https://github.com/facebook/react) and [Redux](https://github.com/reactjs/redux). It is developed with [webpack](https://github.com/webpack/webpack).
 
+![Screenshot](/screenshot.png)
+
 ## Quick start
 
 1. Clone this repo using `git clone git@github.com:agudulin/atm.git`
