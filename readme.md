@@ -27,7 +27,7 @@ It is built on JavaScript using [React](https://github.com/facebook/react) and [
     │   ├── general         // general redux state
     │   │   ├── actions.js
     │   │   ├── reducer.js  // initial state description and state's reducers
-    │   │   └── steps.js
+    │   │   └── steps.js    // reusable string constants
     │   └── reducer.js      // combination of all possible reducers
     ├── components          // small parts of the app
     │   ├── error-pane
@@ -40,6 +40,18 @@ It is built on JavaScript using [React](https://github.com/facebook/react) and [
     │       └── withdrawal-other-amount
     └── index.js            // entry point of the app, mounts the app to DOM
 ```
+
+## Implementation details
+
+1. ATM works as a state machine. That's why I decided to use React for this application: it thinks of UIs as simple state machines.
+1. Redux helps to operate with the state using simple pure functions.
+1. All components except one (`<App />`) are stateless.
+
+## Possible improvements
+
+1. Add a production config with hot reloading disabled, minification enabled, and styles exctracted.
+1. Use [dumb-bem](https://github.com/agudulin/dumb-bem) to produce atomic reusable components.
+1. Use [immutable](https://github.com/facebook/immutable-js/) to be sure the state is an immutable structure.
 
 ## License
 
