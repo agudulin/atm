@@ -22,37 +22,34 @@ import Goodbye from 'components/screens/goodbye'
 import './index.css'
 
 class App extends Component {
-  onInsertCard = () => {
-    this.props.actions.changeStep(ENTER_PIN_STEP)
+  consructor (props) {
+    super(props)
+
+    this.onInsertCard = this.onInsertCard.bind(this)
+    this.onUpdatePin = this.onUpdatePin.bind(this)
+    this.onUpdateCashWithdrawal = this.onUpdateCashWithdrawal.bind(this)
+    this.onEnterPin = this.onEnterPin.bind(this)
+    this.onSelectOtherAmount = this.onSelectOtherAmount.bind(this)
+    this.onEnterCashAmount = this.onEnterCashAmount.bind(this)
+    this.onBack = this.onBack.bind(this)
+    this.onExit = this.onExit.bind(this)
   }
 
-  onUpdatePin = (e) => {
-    this.props.actions.updatePin(e.target.value)
-  }
+  onInsertCard () { this.props.actions.changeStep(ENTER_PIN_STEP) }
 
-  onUpdateCashWithdrawal = (e) => {
-    this.props.actions.updateCashWithdrawal(e.target.value)
-  }
+  onUpdatePin (e) { this.props.actions.updatePin(e.target.value) }
 
-  onEnterPin = () => {
-    this.props.actions.checkPin(this.props.pin)
-  }
+  onUpdateCashWithdrawal (e) { this.props.actions.updateCashWithdrawal(e.target.value) }
 
-  onSelectOtherAmount = () => {
-    this.props.actions.changeStep(WITHDRAWAL_OTHER_AMOUNT_STEP)
-  }
+  onEnterPin () { this.props.actions.checkPin(this.props.pin) }
 
-  onEnterCashAmount = (cashAmount) => {
-    this.props.actions.checkCashAmount(cashAmount)
-  }
+  onSelectOtherAmount () { this.props.actions.changeStep(WITHDRAWAL_OTHER_AMOUNT_STEP) }
 
-  onBack = () => {
-    this.props.actions.changeStepBack()
-  }
+  onEnterCashAmount (cashAmount) { this.props.actions.checkCashAmount(cashAmount) }
 
-  onExit = () => {
-    this.props.actions.changeStep(WELCOME_STEP)
-  }
+  onBack () { this.props.actions.changeStepBack() }
+
+  onExit () { this.props.actions.changeStep(WELCOME_STEP) }
 
   render () {
     const { cashAmount, error, pin, step, spinner } = this.props
