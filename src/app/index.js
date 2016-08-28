@@ -25,6 +25,9 @@ class App extends Component {
   constructor (props) {
     super(props)
 
+    // bind all methods to the context
+    // we could use class properties combined with arrow function here
+    // but standard.js linter doesn't like it
     this.onInsertCard = this.onInsertCard.bind(this)
     this.onUpdatePin = this.onUpdatePin.bind(this)
     this.onUpdateCashAmount = this.onUpdateCashAmount.bind(this)
@@ -54,6 +57,8 @@ class App extends Component {
   render () {
     const { cashAmount, error, pin, step, spinner } = this.props
 
+    // let's use Object literal pattern instead of switch-case
+    // because it's more maintainable and readable
     const renderScreen = {
       [WELCOME_STEP]: () => (
         <Welcome onInsertCard={this.onInsertCard} />
@@ -102,6 +107,7 @@ class App extends Component {
   }
 }
 
+// pass redux state through props to the component
 const mapStateToProps = (state) => ({
   cashAmount: state.general.cashAmount,
   step: state.general.step,
@@ -110,6 +116,7 @@ const mapStateToProps = (state) => ({
   pin: state.general.pin
 })
 
+// pass actions through props to the component
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(actions, dispatch)
 })

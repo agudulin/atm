@@ -11,6 +11,8 @@ export const UPDATE_PIN = 'UPDATE_PIN'
 export const UPDATE_CASH_WITHDRAWAL = 'UPDATE_CASH_WITHDRAWAL'
 export const SHOW_SPINNER = 'SHOW_SPINNER'
 
+const DEFAULT_PASSWORD = '1234'
+
 const randomInt = (min, max) => {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -47,7 +49,7 @@ export const changeStepBack = () => (dispatch) => {
 export const checkPin = (pin) => (dispatch) => {
   dispatch(showSpinner())
 
-  if (pin !== '1234') {
+  if (pin !== DEFAULT_PASSWORD) {
     fakeHardwareDelay(() => dispatch({
       type: CHANGE_STEP,
       payload: { error: 'Incorrect PIN', step: ENTER_PIN_STEP }
@@ -77,7 +79,7 @@ export const checkCashAmount = (cashAmount) => (dispatch) => {
     fakeHardwareDelay(() => dispatch({
       type: CHANGE_STEP,
       payload: {
-        error: 'Incorrect amount of money',
+        error: 'Incorrect amount of money. Correct: 10, 20, 30, etc.',
         step: WITHDRAWAL_OTHER_AMOUNT_STEP
       }
     }))
