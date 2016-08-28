@@ -1,6 +1,4 @@
-import {
-  WELCOME_STEP
-} from './steps'
+import { WELCOME_STEP } from './steps'
 import {
   CHANGE_STEP,
   CHANGE_STEP_BACK,
@@ -17,12 +15,19 @@ const initialState = {
   stepsBack: []
 }
 
+const addStepToStack = (stepsBack, previousStep, currentStep) => (
+  previousStep === currentStep ? stepsBack : [...stepsBack, previousStep]
+)
+
+const popStepFromStack = (stepsBack) => ({
+  step: stepsBack[stepsBack.length - 1],
+  stepsBack: stepsBack.slice(0, -1)
+})
+
 export default (state = initialState, action) => {
   const updateState = {
     [CHANGE_STEP]: ({ step, error }) => {
-      const stepsBack = (state.step === step)
-        ? state.stepsBack
-        : [...state.stepsBack, state.step]
+      const stepsBack = addStepToStack(state.stepsBack, state.step, step)
 
       return Object.assign({}, state, {
         error,
@@ -32,8 +37,7 @@ export default (state = initialState, action) => {
       })
     },
     [CHANGE_STEP_BACK]: () => {
-      const step = state.stepsBack[state.stepsBack.length - 1]
-      const stepsBack = state.stepsBack.slice(0, -1)
+      const { step, stepsBack } = popStepFromStack(state.stepsBack)
 
       return Object.assign({}, state, {
         error: null,
