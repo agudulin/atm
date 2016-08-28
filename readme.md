@@ -12,7 +12,9 @@ It is built on JavaScript using [React](https://github.com/facebook/react) and [
 
 1. Clone this repo using `git clone git@github.com:agudulin/atm.git`
 1. Run `npm install` to install dependencies
-1. Run `npm start` to see the app at `http://localhost:8080`.
+1. Run `npm start` to see the app at `http://localhost:8080`
+1. Run `npm run lint` to lint the codebase with standradjs
+1. Run `npm test` to run specs.
 
 ## Project structure
 
