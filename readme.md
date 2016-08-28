@@ -6,7 +6,7 @@ A small web based prototype of an ATM.
 
 It is built on JavaScript using [React](https://github.com/facebook/react) and [Redux](https://github.com/reactjs/redux). It is developed with [webpack](https://github.com/webpack/webpack) and [postcss](https://github.com/postcss/postcss).
 
-![Screenshot](/screenshot.png)
+![Screenshot](/screenshot.jpg)
 
 ## Quick start
 
