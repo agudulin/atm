@@ -22,12 +22,12 @@ import Goodbye from 'components/screens/goodbye'
 import './index.css'
 
 class App extends Component {
-  consructor (props) {
+  constructor (props) {
     super(props)
 
     this.onInsertCard = this.onInsertCard.bind(this)
     this.onUpdatePin = this.onUpdatePin.bind(this)
-    this.onUpdateCashWithdrawal = this.onUpdateCashWithdrawal.bind(this)
+    this.onUpdateCashAmount = this.onUpdateCashAmount.bind(this)
     this.onEnterPin = this.onEnterPin.bind(this)
     this.onSelectOtherAmount = this.onSelectOtherAmount.bind(this)
     this.onEnterCashAmount = this.onEnterCashAmount.bind(this)
@@ -39,7 +39,7 @@ class App extends Component {
 
   onUpdatePin (e) { this.props.actions.updatePin(e.target.value) }
 
-  onUpdateCashWithdrawal (e) { this.props.actions.updateCashWithdrawal(e.target.value) }
+  onUpdateCashAmount (e) { this.props.actions.updateCashWithdrawal(e.target.value) }
 
   onEnterPin () { this.props.actions.checkPin(this.props.pin) }
 
@@ -75,7 +75,7 @@ class App extends Component {
         <WithdrawalOtherAmount
           cashAmount={cashAmount}
           onEnterCashAmount={this.onEnterCashAmount}
-          onUpdateCashWithdrawal={this.onUpdateCashWithdrawal}
+          onUpdateCashAmount={this.onUpdateCashAmount}
         />
       ),
       [GOODBYE_STEP]: () => (
